@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Design tokens (space-separated RGB so Tailwind opacity works).
+   Change the theme here only - no component contains a raw colour.
+------------------------------------------------------------------- */
+:root {
+  --background: 243 244 250;
+  --surface: 255 255 255;
+  --surface-muted: 247 248 252;
+  --border: 226 229 241;
+  --foreground: 30 27 56;
+  --muted: 108 112 142;
+
+  --primary: 99 52 205;
+  --primary-hover: 82 40 178;
+  --primary-foreground: 255 255 255;
+  --primary-soft: 239 234 253;
+
+  --sidebar: 34 25 75;
+  --sidebar-foreground: 199 195 226;
+  --sidebar-active: 255 255 255;
+
+  --success: 22 140 84;
+  --success-soft: 223 245 234;
+  --warning: 178 106 8;
+  --warning-soft: 254 242 214;
+  --danger: 205 45 62;
+  --danger-soft: 253 228 231;
+  --info: 29 111 200;
+  --info-soft: 220 235 252;
+
+  --overlay: 20 16 45;
+  --shadow: 30 27 56;
+}
+
+@layer base {
+  html { font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif; }
+  body { @apply bg-background text-foreground antialiased; }
+  :focus-visible { @apply outline-none ring-2 ring-primary/60 ring-offset-1 ring-offset-surface; }
+}
+
+@layer components {
+  .input-base {
+    @apply w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground
+      placeholder:text-muted/70 transition focus:border-primary disabled:bg-surface-muted disabled:opacity-70;
+  }
+}
+
+/* Invoice print: hide app chrome, show only the invoice sheet */
+@media print {
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; inset: 0; box-shadow: none; border: 0; }
+  .no-print { display: none !important; }
+}
