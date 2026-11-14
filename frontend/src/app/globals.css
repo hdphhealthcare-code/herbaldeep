@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Design tokens (space-separated RGB so Tailwind opacity works).
+   Change the theme here only - no component contains a raw colour.
+------------------------------------------------------------------- */
+:root {
+  --background: 247 245 242;
+  --surface: 255 255 255;
+  --surface-muted: 250 248 245;
+  --border: 236 232 226;
+  --foreground: 26 23 20;
+  --muted: 120 113 106;
+
+  --primary: 242 101 34;
+  --primary-hover: 217 84 17;
+  --primary-foreground: 255 255 255;
+  --primary-soft: 254 238 228;
+
+  --sidebar: 18 16 14;
+  --sidebar-foreground: 168 162 155;
+  --sidebar-active: 255 255 255;
+
+  --success: 21 128 61;
+  --success-soft: 220 244 228;
+  --warning: 180 100 8;
+  --warning-soft: 254 243 214;
+  --danger: 220 38 38;
+  --danger-soft: 254 226 226;
+  --info: 37 99 235;
+  --info-soft: 224 236 254;
+
+  --overlay: 18 16 14;
+  --shadow: 40 30 20;
+}
+
+@layer base {
+  html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif; font-feature-settings: 'cv11', 'ss01'; }
+  body { @apply bg-background text-foreground antialiased; }
+  :focus-visible { @apply outline-none ring-2 ring-primary/60 ring-offset-1 ring-offset-surface; }
+}
+
+@layer base {
+  /* slim scrollbars, smooth anchor scrolling, steadier tables */
+  * { scrollbar-width: thin; scrollbar-color: rgb(var(--border)) transparent; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--border)); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--muted) / 0.5); }
+  button:not(:disabled), select { cursor: pointer; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+}
+
+@layer components {
+  .input-base {
+    @apply w-full rounded-xl border border-border bg-surface px-3.5 py-2.5 text-sm text-foreground
+      placeholder:text-muted/70 transition hover:border-foreground/20 focus:border-primary disabled:bg-surface-muted disabled:opacity-70;
+  }
+  /* order ids, AWB numbers and amounts use a monospace face, like the Xpressbees panel */
+  .num { font-family: ui-monospace, SFMono-Regular, 'JetBrains Mono', Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.08em] text-muted; }
+}
+
+/* Invoice print: hide app chrome, show only the invoice sheet */
+@media print {
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; inset: 0; box-shadow: none; border: 0; }
+  .no-print { display: none !important; }
+}

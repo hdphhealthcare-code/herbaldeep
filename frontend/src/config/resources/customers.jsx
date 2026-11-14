@@ -1,0 +1,26 @@
+export const customersConfig = {
+  title: 'Customers',
+  description: 'People who place orders with you. Enter the pincode and the state and city fill in by themselves.',
+  singular: 'Customer',
+  endpoint: '/customers',
+  searchPlaceholder: 'Search by name, mobile, city or pincode',
+  columns: [
+    { key: 'name', label: 'Name', render: (r) => <span className="font-medium">{r.name}</span> },
+    { key: 'mobile', label: 'Mobile' },
+    { key: 'city', label: 'City / State', render: (r) => [r.city, r.state].filter(Boolean).join(', ') || '-' },
+    { key: 'pincode', label: 'Pincode', render: (r) => r.pincode || '-' },
+    { key: 'address', label: 'Address', className: 'max-w-xs truncate' },
+    { key: 'createdBy', label: 'Added by', render: (r) => r.createdBy?.name || <span className="text-muted">Admin</span> },
+  ],
+  fields: [
+    { name: 'name', label: 'Customer name', required: true },
+    { name: 'mobile', label: 'Mobile number', required: true },
+    { name: 'email', label: 'Email', type: 'email' },
+    { name: 'pincode', label: 'Pincode', type: 'pincode', required: true, fills: { state: 'state', city: 'city', area: 'area' } },
+    { name: 'state', label: 'State', required: true },
+    { name: 'city', label: 'City', required: true },
+    { name: 'area', label: 'Area / locality', suggestions: true },
+    { name: 'address', label: 'Address', type: 'textarea', required: true, full: true },
+    { name: 'notes', label: 'Notes', type: 'textarea', full: true },
+  ],
+};
